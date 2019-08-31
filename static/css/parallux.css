@@ -1,0 +1,126 @@
+body {
+  font-family: 'Titillium Web', sans-serif;
+}
+body, html {
+    height: 100%;
+}
+
+.parallax1 {
+    /* The image used */
+    background-image: url('../img/slide01.jpg');
+
+    /* Full height */
+    height: 100%; 
+    width: 100%;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+.parallux_background{
+  background: #4dd0e1;
+  height: 300px;  
+}
+.parallux_background h1{
+  margin: 0px;
+}
+.parallax2 {
+  
+  background-image: url('../img/slide02.jpg');
+  /* Full height */
+    height: 100%; 
+    width: 100%;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.parallux_background2{
+  background: #ff8a65;
+  height: 300px;
+}
+.parallux_background2 h1{
+  margin: 0px;
+}
+.parallax3 {
+  
+  background-image: url('../img/slide03.jpg');
+  /* Full height */
+    height: 100%; 
+    width: 100%;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.parallux_background3{
+  background: yellow;
+  height: 300px;
+}
+.parallux_background3 h1{
+  margin: 0px;
+}
+.button_middle {
+  margin-top: 0px;
+  padding-top: 100px;
+}
+.button_middle button{
+  padding: 50px;
+  font-size: 25pt
+}
+#custom-bootstrap-menu.navbar-default .navbar-brand {
+    color: rgba(68, 245, 68, 1);
+}
+#custom-bootstrap-menu.navbar-default {
+    font-size: 14px;
+    background-color: rgba(68, 245, 68, 1);
+    border-width: 1px;
+    border-radius: 4px;
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(68, 245, 68, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:focus {
+    color: rgba(51, 51, 51, 1);
+    background-color: rgba(72, 218, 240, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:focus {
+    color: rgba(85, 85, 85, 1);
+    background-color: rgba(68, 245, 68, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle {
+    border-color: #44f544;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus {
+    background-color: #44f544;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #44f544;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover .icon-bar,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #44f544;
+}
+
+Background Styles
+Default Styles
+Hover Styles
+Active Styles
+Font Styles
+Brand Color
+Font Color
+Hover Font Color
+Active Font Color
+Font Sizepx
+Border Styles

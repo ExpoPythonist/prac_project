@@ -1,0 +1,40 @@
+version: '3'
+services:
+  backend: &backend
+    hostname: backend
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./openaccess:/apps/oametrix/backend/oametrix2019
+    environment:
+      - PYTHONUNBUFFERED=1
+    ports:
+      - 8003:8000
+    command: pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py openaccess_init_data && python manage.py openaccess_init_data2 && python manage.py runserver 0.0.0.0:8000 
+    depends_on:
+      - db
+      - celery_worker
+
+  db:
+    image: postgres:9.6
+    hostname: db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/    
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_DB=oametrix
+      - POSTGRES_PASSWORD=root
+    ports:
+      - "5435:5432"
+
+  celery_worker:
+    <<: *backend
+    command: celery -A openaccess worker -l info
+    ports: []
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

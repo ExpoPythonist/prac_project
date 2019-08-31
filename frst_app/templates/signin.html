@@ -1,0 +1,14 @@
+{% block content %}
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    </head>
+    <body>
+        <h1>Student Signin</h1>
+        <form accept-charset="UTF-8" method="POST" action="{% url 'student_signin' %}">{% csrf_token %}
+            <input  placeholder="Enter Email" name="email">
+            <button class="btn btn-success" type="submit" class="btn btn-success">Signin</button>
+        </form>
+    </body>
+</html>
+{% endblock %}

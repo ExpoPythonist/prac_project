@@ -1,0 +1,201 @@
+{% load static %}
+{% block content %}
+    <html>
+    <head>
+
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+
+        <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+              type="text/css">
+
+        <link rel="icon favicon" href="{% static 'image/dds.png' %}">
+        <meta name="keywords" content="HTML5 Template"/>
+        <meta name="description" content="Responsive HTML5 Template">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+        <!-- Libs CSS -->
+
+        <link href="{% static 'css/animate.css' %}" rel="stylesheet"/>
+        <link href="{% static 'js/graph/dds.css' %}" rel="stylesheet"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.css" rel="stylesheet"/>
+
+
+        <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+        <script src="{% static 'js/plugins/jquery.graphup.pack2.js' %}"></script>
+        <script src="{% static 'js/plugins/d3.min.js' %}"></script>
+        <script src="{% static 'js/plugins/d3.layout.cloud.min.js' %}"></script>
+
+        <script src="{% static 'js/jquery-3.1.0.min.js' %}"></script>
+        <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/plugins/jquery.graphup.pack2.js' %}"></script>
+        <script src="{% static 'js/theme-plugins.js' %}"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.min.css"></script>
+
+
+    </head>
+    <body>
+    <h1>Online Examination system </h1>
+    <div class="my-clock"></div>
+
+    <br>
+    <h3> All Question List : </h3><br>
+
+    <table id="questions" class="table">
+
+        <thead class="thead-dark">
+        <tr>
+            <th>Q. ID</th>
+            <th>Question</th>
+            <th>Options</th>
+            <th>Answer</th>
+        </tr>
+        </thead>
+
+
+        {% for data in all_data %}
+            <tr>
+                <td id="question_id">{{ data.id }}</td>
+                <td>{{ data.question }}</td>
+                <td>
+                    <ol type="A">
+                        {% for op_data in data.options %}
+                            <li><strong> {{ op_data.option }} </strong></li>
+                            {#                            <input type="radio" name="answer" value="{{ op_data.option }}">{{ op_data.option }}<br>#}
+
+                        {% endfor %}
+                    </ol>
+                </td>
+                <td>
+                    {% if data.flag == 0 %}
+                        <div id="div {{ data.id }}">
+                            <input type="radio" name="answer_{{ data.id }}" value="A"
+                                   onclick="return question_answer_func({{ data.id }});"> A &nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="answer_{{ data.id }}" value="B"
+                                   onclick="return question_answer_func({{ data.id }});"> B &nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="answer_{{ data.id }}" value="C"
+                                   onclick="return question_answer_func({{ data.id }});"> C &nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="answer_{{ data.id }}" value="D"
+                                   onclick="return question_answer_func({{ data.id }});"> D &nbsp;&nbsp;&nbsp;
+                        </div>
+                    {% else %}
+                        <p>Answered</p>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+
+
+    </table>
+    <br><br>
+    <button type="button" style="color: orangered">Submit answer</button>
+    <input type="hidden" value="{{ time_val }}" name="time_val" id="time_val_id">
+
+    <button type="button"><a href="{% url 'home' %}"> << Go Back</a></button>
+
+
+    </body>
+    </html>
+    <script type="text/javascript">
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        function question_answer_func(id) {
+
+            ans_name = 'answer_' + id
+            var answer = $('input[name=answer_' + id + ']:checked').val();
+
+
+            $.ajax({
+                url: "/add-examination-answer",
+                type: "POST",
+                data:
+                    {
+                        question_id: id,
+                        answer: answer,
+                        csrfmiddlewaretoken: csrftoken
+                    },
+                beforeSend: function (xhr, settings) {
+
+                },
+                error: function (xhr, errmsg, err) {
+
+                },
+                success: function (data) {
+                    //alert(data);
+                    if (data != 0) {
+                        {#window.location.href = "/add-question"#}
+                        document.getElementById('div ' + id).innerHTML = 'Answered';
+
+                    } else {
+                        alert("Bad Request.Try Again with right formate of data.")
+
+                    }
+                }
+
+            });
+
+        }
+
+        var time_val = document.getElementById('time_val_id').value;
+        var clock = new FlipClock($('.my-clock'), time_val, {
+            clockFace: 'MinuteCounter',
+            countdown: true,
+            onStart: function () {
+            },
+            onStop: function () {
+            },
+            onReset: function () {
+            },
+            callbacks: {
+                interval: function () {
+                    var time = this.factory.getTime().time;
+                    if (time %5==0) {
+                        $.ajax({
+                            url: "/remain-time-json",
+                            type: "POST",
+                            data:
+                                {
+                                    sec: time,
+                                    csrfmiddlewaretoken: csrftoken
+                                },
+                            success: function (data) {
+                                //alert(data);
+                                if (data != 0) {
+                                } else {
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+    </script>
+{% endblock %}
+
+
+

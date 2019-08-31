@@ -1,0 +1,144 @@
+{% load static %}
+{% block content %}
+    <html>
+    <head>
+
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              crossorigin="anonymous">
+        <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+              type="text/css">
+
+        <link rel="icon favicon" href="{% static 'image/dds.png' %}">
+        <meta name="keywords" content="HTML5 Template"/>
+        <meta name="description" content="Responsive HTML5 Template">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+        <!-- Libs CSS -->
+
+        <link href="{% static 'css/animate.css' %}" rel="stylesheet"/>
+        <link href="{% static 'js/graph/dds.css' %}" rel="stylesheet"/>
+
+        <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+        <script src="{% static 'js/plugins/jquery.graphup.pack2.js' %}"></script>
+        <script src="{% static 'js/plugins/d3.min.js' %}"></script>
+        <script src="{% static 'js/plugins/d3.layout.cloud.min.js' %}"></script>
+
+        <script src="{% static 'js/jquery-3.1.0.min.js' %}"></script>
+        <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/plugins/jquery.graphup.pack2.js' %}"></script>
+        <script src="{% static 'js/theme-plugins.js' %}"></script>
+
+
+    </head>
+    <body>
+    <h1>Online Examination system </h1>
+
+    <br>
+        <h3> Your Question: </h3><br>
+        <input type="text" name="question" id="id_question" required>
+        <br>
+        <br>
+        <br>
+        <h3> Add Option: </h3>
+        <strong>A: </strong><input type="text" name="op_a" id="id_op_a" required> <br>
+        <strong>B: </strong><input type="text" name="op_b" id="id_op_b" required> <br>
+        <strong>C: </strong><input type="text" name="op_c" id="id_op_c" required> <br>
+        <strong>D: </strong><input type="text" name="op_d" id="id_op_d" required> <br><br><br>
+        <strong>Choose Answer: </strong>
+
+        <input type="radio" name="answer" value="A"> A  &nbsp;&nbsp;&nbsp;
+        <input type="radio" name="answer" value="B"> B &nbsp;&nbsp;&nbsp;
+        <input type="radio" name="answer" value="C"> C  &nbsp;&nbsp;&nbsp;
+        <input type="radio" name="answer" value="D"> D   &nbsp;&nbsp;&nbsp;
+
+        <br>
+
+        <br><br>
+        <button type="button" style="color: orangered" onclick="return add_question_func();">Add More Question</button>
+        <br> <br>
+    <button type="button" > <a href="{% url 'home' %}"> << Go Back</a></button>
+
+
+    </body>
+    </html>
+
+
+    <script type="text/javascript">
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        function add_question_func() {
+            var question = document.getElementById("id_question").value;
+            var op_a = document.getElementById("id_op_a").value;
+            var op_b = document.getElementById("id_op_b").value;
+            var op_c = document.getElementById("id_op_c").value;
+            var op_d = document.getElementById("id_op_d").value;
+            var answer = $('input[name=answer]:checked').val();
+
+
+            $.ajax({
+                url: "/add-question-json",
+                type: "POST",
+                data:
+                    {
+                        question: question,
+                        op_a: op_a,
+                        op_b: op_b,
+                        op_c: op_c,
+                        op_d: op_d,
+                        answer: answer,
+                        csrfmiddlewaretoken: csrftoken
+                    },
+                beforeSend: function (xhr, settings) {
+
+                },
+                error: function (xhr, errmsg, err) {
+
+                },
+                success: function (data) {
+                    //alert(data);
+                    if (data != 0) {
+                        window.location.href = "/add-question"
+
+                    } else {
+                        alert("Bad Request.Try Again with right formate of data.")
+
+                    }
+                }
+
+            });
+
+        }
+
+    </script>
+
+
+
+{% endblock %}
+
+
+

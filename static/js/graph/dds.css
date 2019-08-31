@@ -1,0 +1,105 @@
+#nounTable td.only {
+    background-color: rgba(30, 144, 255, 0.1)
+}
+#verbTable td.only {
+    background-color: rgba(240, 128, 128, 0.1)
+}
+#adjTable td.only {
+    background-color: rgba(0, 255, 127, 0.1)
+}
+
+table.single th {
+    background-color: #f5f5f5;
+    text-align: center
+}
+table.single tbody td {
+    padding: 0 0 0 5px;
+    font-size: 20px
+}
+table.single tbody td.tf-idf,
+table.single tbody td.freq {
+    width: 100px;
+    text-align: right
+}
+table.single tbody div.bar {
+    top: 3px;
+    bottom: -3px
+}
+
+
+table.ratio {
+    table-layout: fixed
+}
+table.ratio th {
+    background-color: #f5f5f5;
+    text-align: center
+}
+table.ratio th.header-name {
+    width: 35%
+}
+table.ratio th.header-name div {
+    overflow: hidden
+}
+table.ratio th:nth-child(2),
+table.ratio td:nth-child(2) {
+    border-left: 3px solid #ddd;
+    border-right: 3px solid #ddd
+}
+table.ratio td.word-header {
+    text-align: center
+}
+table.ratio td.word-left {
+    background-color: rgba(245, 229, 128, 0.75)
+}
+table.ratio td.word-right {
+    background-color: rgba(200, 168, 225, 0.75)
+}
+table.ratio td.file-ratio-1 {
+    text-align: right
+}
+table.ratio tbody td {
+    padding: 0 0 0 5px;
+    font-size: 16px
+}
+table.ratio tbody td.tf-idf {
+    width: 80px;
+    padding: 0 3px 0 0;
+    text-align: right
+}
+
+
+
+
+table.ratio-fuzzy-set {
+    table-layout: fixed
+}
+table.ratio-fuzzy-set span.noun {
+    color: #1e90ff
+}
+table.ratio-fuzzy-set span.verb {
+    color: #f08080
+}
+table.ratio-fuzzy-set span.adj {
+    color: #00af57
+}
+table.ratio-fuzzy-set th {
+    text-align: center;
+    background-color: #f5f5f5
+}
+table.ratio-fuzzy-set td {
+    word-break: keep-all;
+    word-spacing: 10px;
+    font-size: 20px
+}
+table.ratio-fuzzy-set .col-0 {
+    background-color: #fffce7
+}
+table.ratio-fuzzy-set .col-1 {
+    background-color: #fffdf4
+}
+table.ratio-fuzzy-set .col-3 {
+    background-color: #fbf5ff
+}
+table.ratio-fuzzy-set .col-4 {
+    background-color: #f7edff
+}
