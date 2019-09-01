@@ -1,0 +1,18 @@
+{
+   "en":{
+      "sign_in":"Sign In",
+      "register":"Register",
+      "about_wallets":"About wallets",
+      "my_profile ":"My Profile",
+      "log_out":"Log Out",
+      "buy_itcoin":"The easy way to buy Bitcoin.No ID required."
+   },
+   "bn":{
+      "sign_in":"প্রবেশ করুন",
+      "register":"নিবন্ধন করুন",
+      "about_wallets":"ওয়ালেট দেখুন",
+      "my_profile ":"আমার প্রোফাইল",
+      "log_out":"প্রস্থান",
+      "buy_itcoin":"বিটকয়েন কেনার সহজ উপায়।কোন আইডি প্রয়োজন নাই।"
+   }
+}

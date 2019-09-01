@@ -1,18 +1,100 @@
+import json
 from decimal import Decimal
 
+import requests
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render
+from utils.call_api_processor import CallAPIProcessor
+from utils.language_processor import LanguageDetector
 
 from .models import *
 from django.http import HttpResponse, HttpResponseRedirect
 
 
 def home(request):
+    lang_data = LanguageDetector.get_language_processor(request)
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/')
+    return render(request, 'signin2.html', {'lang_data': lang_data})
 
-    return render(request, 'index.html', {'all_post_list': ''})
+
+def register(request):
+    # lang_data = LanguageDetector.post_language_processor(request)
+    # if request.user.is_authenticated:
+    #     return HttpResponseRedirect('/')
+
+    if request.method == "POST":
+        code = request.POST.get('code')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        # code = Code.objects.filter(code=code, is_used=False).first()
+        url = "https://web-instant.develop.crypto-vouchers.kube.ovh/en/register"
+        data = {
+            "code": "atque….",
+            "email": email,
+            "password": password,
+            "agreement": "True"
+        }
+        api_resister = CallAPIProcessor.api(url=url, request=request, data=data)
+        print('api_resister ', api_resister)
+        return render(request, 'register.html', {'message': 'Registration is complete! Please login'})
+
+        # if code:
+        #     code.is_used = True
+        #     code.save()
+        # else:
+        #     message = '"' + code + '" already used. Please try with a different promo code.'
+        #     return render(request, 'register.html', {'lang_data': lang_data, "message": message})
+        #
+        # user = User.objects.filter(email=email).first()
+        # if user is not None:
+        #     message = '"' + email + '" already exist. Please try with a different email.'
+        #     return render(request, 'register.html', {'lang_data': lang_data, "message": message})
+        # else:
+        #     user = User.objects.create_user(username=email, password=password, email=email)
+        #     user.is_staff = True
+        #     user.is_active = True
+        #     user.is_superuser = False
+        #     user.save()
+    return render(request, 'register.html')
 
 
+def signin(request):
+    lang_data = LanguageDetector.get_language_processor(request)
+    # if request.user.is_authenticated:
+    #     return HttpResponseRedirect('/')
+
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        url = 'https://web-instant.develop.crypto-vouchers.kube.ovh/bn/login'
+        data = {
+            "email": email,
+            "password": password
+        }
+        api_login = CallAPIProcessor.api(url=url, request=request, data=data)
+        print(api_login)
+    #     user = authenticate(username=email, password=password)
+    #     if user.is_active:
+    #         # return User.objects.get(username=email)
+    #         login(request, user)
+    #         return HttpResponseRedirect('/wallet')
+    #     else:
+    #         return HttpResponseRedirect('/register')
+    # elif request.method == "GET":
+    #     return HttpResponseRedirect('/wallet')
+
+    return render(request, 'signin2.html', {'lang_data': lang_data})
+
+
+def signout(request):
+    lang_data = LanguageDetector.post_language_processor(request)
+    if request.user.is_authenticated:
+        logout(request)
+        return HttpResponseRedirect('/signin')
+    else:
+        return HttpResponseRedirect('/')
 
 # def add_question(request):
 #     return render(request, 'add_question.html')

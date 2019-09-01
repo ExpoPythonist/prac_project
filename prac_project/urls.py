@@ -20,6 +20,8 @@ from frst_app import views
 urlpatterns = [
     path('admin', admin.site.urls),
     path('', views.home, name='home'),
+    path('signin', views.signin, name='signin'),
+    path('register', views.register, name='register'),
     # path('student-edit/<int:s_id>/', views.EditStudent, name='student_edit'),
 
 ]
