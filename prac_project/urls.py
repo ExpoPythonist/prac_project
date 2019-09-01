@@ -21,6 +21,7 @@ urlpatterns = [
     path('admin', admin.site.urls),
     path('', views.home, name='home'),
     path('signin', views.signin, name='signin'),
+    path('signout', views.signout, name='signout'),
     path('register', views.register, name='register'),
     # path('student-edit/<int:s_id>/', views.EditStudent, name='student_edit'),
 

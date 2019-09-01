@@ -47,36 +47,48 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <a href="{% url 'signin' %}" class="btn btn-outline-success">{{ lang_data.sign_in }}</a>
-                <a href="{% url 'register' %}" class="btn btn-outline-success my-2 my-sm-0 ml-1">{{ lang_data.register }}</a>
+                {% if email %}
+                    <a class="text-success ml-r">{{ email }}</a>
+                    <a href="{% url 'signout' %}" class="btn btn-outline-success my-2 my-sm-0 ml-1">Logout</a>
+                {% else %}
+                <a href="{% url 'signin' %}" class="btn btn-outline-success">Sign In</a>
+                <a href="{% url 'register' %}" class="btn btn-outline-success my-2 my-sm-0 ml-1">Register</a>
+                {% endif %}
             </form>
         </div>
     </nav>
 
     {#                # ========================================   Header End ============================================#}
     <div class="container">
-
         <section  class="login-section">
+            <h1 class="display-4 text-dark">The easy way to buy Bitcoin.</h1>
+            <h2 class="display-4 text-success"><small>No ID required.</small></h2>
             <div id="container_demo">
                 <!-- hidden anchor to stop jump http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
                 <a class="hiddenanchor" id="toregister"></a>
                 <a class="hiddenanchor" id="tologin"></a>
                 <div id="wrapper">
                     <div id="login" class="animate form">
-                        <form action="{% url 'signin' %}" method="POST" >{% csrf_token %}
-                            <h1>{{ lang_data.sign_in }}</h1>
+                        <h1 class="text-success text-center"><small>Choose your voucher/s</small></h1>
+                        <form action="" method="POST" >{% csrf_token %}
                             <p>
-                                <label for="username" class="uname" data-icon="u"> {{ lang_data.your_email_or_username }} </label>
-                                <input id="username" name="email" required="required" type="text"
-                                       placeholder="{{ lang_data.your_email_or_username }} "/>
+                                <label >Enter the amount you wish to buy: </label>
+                                <input id="username" name="amount" required="required" type="text"
+                                       placeholder="Enter the amount"/>
                             </p>
                             <p>
-                                <label for="password" class="youpasswd" data-icon="p"> {{ lang_data.your_password }} </label>
-                                <input id="password" name="password" required="required" type="password"
-                                       placeholder="{{ lang_data.your_password }}"/>
+                                <label id="username" data-icon="u"> Email </label>
+                                <input id="password" name="email" required="required" type="email"
+                                       placeholder="Enter your email"/>
                             </p>
-                            <p class="login button">
-                                <input type="submit" value="{{ lang_data.sign_in }}"/>
+                            <p>
+                                <label > Bitcoin wallet address: </label>
+                                <input id="password" name="wallet_address" required="required" type="password"
+                                       placeholder="Enter your BTC wallet address"/>
+                            </p>
+                            <p class="font-weight-bold">Make sure the wallet address is correct. Otherwise, your Bitcoin will be lost.</p>
+                            <p class="login button text-center">
+                                <input class="text-center" type="submit" value="Pay with Credit Card"/>
                             </p>
                         </form>
                         {% if message %}

@@ -6,7 +6,8 @@ class CallAPIProcessor(object):
 
     @classmethod
     def api(cls, url, request, data={}, params={}):
-        headers = {'Content-Type': 'application/soap+xml', 'charset': 'utf-8'}
+
+        headers = {'Content-Type': 'application/json'}
         if request.method == "GET":
             return requests.get(url=url, params=params, headers=headers)
         elif request.method == "POST":

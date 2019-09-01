@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from utils.call_api_processor import CallAPIProcessor
+from utils.is_authenticated import is_authenticated
 from utils.language_processor import LanguageDetector
 
 from .models import *
@@ -14,85 +15,79 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 def home(request):
     lang_data = LanguageDetector.get_language_processor(request)
-    if request.user.is_authenticated:
-        return HttpResponseRedirect('/')
-    return render(request, 'signin2.html', {'lang_data': lang_data})
+
+    if not is_authenticated(request):
+        return HttpResponseRedirect('signin')
+    print(request.session['auth'])
+    print(request.session['email'])
+    return render(request, 'home.html',
+                  {'lang_data': lang_data, 'email': request.session['email'], 'auth': request.session['auth']})
 
 
 def register(request):
-    # lang_data = LanguageDetector.post_language_processor(request)
-    # if request.user.is_authenticated:
-    #     return HttpResponseRedirect('/')
+    lang_data = LanguageDetector.get_language_processor(request)
+    if is_authenticated(request):
+        return HttpResponseRedirect('/')
 
     if request.method == "POST":
         code = request.POST.get('code')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        # code = Code.objects.filter(code=code, is_used=False).first()
-        url = "https://web-instant.develop.crypto-vouchers.kube.ovh/en/register"
+        repeat_password = request.POST.get('repeat_password')
+        if not password == repeat_password:
+            return render(request, 'register.html', {'err_message': '** Password doesn\'t match!', 'lang_data': lang_data})
+        url = "https://exercise.api.rebiton.com/auth/register"
         data = {
-            "code": "atque….",
+            "code": code,
             "email": email,
             "password": password,
-            "agreement": "True"
+            "agreement": True
         }
-        api_resister = CallAPIProcessor.api(url=url, request=request, data=data)
-        print('api_resister ', api_resister)
-        return render(request, 'register.html', {'message': 'Registration is complete! Please login'})
+        response = CallAPIProcessor.api(url=url, request=request, data=data)
 
-        # if code:
-        #     code.is_used = True
-        #     code.save()
-        # else:
-        #     message = '"' + code + '" already used. Please try with a different promo code.'
-        #     return render(request, 'register.html', {'lang_data': lang_data, "message": message})
-        #
-        # user = User.objects.filter(email=email).first()
-        # if user is not None:
-        #     message = '"' + email + '" already exist. Please try with a different email.'
-        #     return render(request, 'register.html', {'lang_data': lang_data, "message": message})
-        # else:
-        #     user = User.objects.create_user(username=email, password=password, email=email)
-        #     user.is_staff = True
-        #     user.is_active = True
-        #     user.is_superuser = False
-        #     user.save()
-    return render(request, 'register.html')
+        if response.status_code == 200:
+            return render(request, 'register.html', {'success_message': '** Registration is complete! Please login'})
+        else:
+            res_content = json.loads(response.content.decode('utf-8'))
+            error = res_content['errors']
+            last_err = "Registration is Failed"
+            for err in error:
+                last_err = err
+            return render(request, 'register.html', {'message': '** '+error[last_err][0]})
+
+
+
+    return render(request, 'register.html', {'lang_data': lang_data})
 
 
 def signin(request):
     lang_data = LanguageDetector.get_language_processor(request)
-    # if request.user.is_authenticated:
-    #     return HttpResponseRedirect('/')
 
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
-        url = 'https://web-instant.develop.crypto-vouchers.kube.ovh/bn/login'
+        url = 'https://exercise.api.rebiton.com/auth/login'
         data = {
             "email": email,
             "password": password
         }
-        api_login = CallAPIProcessor.api(url=url, request=request, data=data)
-        print(api_login)
-    #     user = authenticate(username=email, password=password)
-    #     if user.is_active:
-    #         # return User.objects.get(username=email)
-    #         login(request, user)
-    #         return HttpResponseRedirect('/wallet')
-    #     else:
-    #         return HttpResponseRedirect('/register')
-    # elif request.method == "GET":
-    #     return HttpResponseRedirect('/wallet')
+        response = CallAPIProcessor.api(url=url, request=request, data=data)
+        print('response  ', response.content)
+        if response.status_code == 200:
+            request.session['auth'] = json.loads(response.content.decode('utf-8'))
+            request.session['email'] = email
+            return HttpResponseRedirect('/')
+        else:
+            return render(request, 'signin2.html', {'message': 'Credential doesn\'t match!', 'lang_data': lang_data})
 
     return render(request, 'signin2.html', {'lang_data': lang_data})
 
 
 def signout(request):
-    lang_data = LanguageDetector.post_language_processor(request)
-    if request.user.is_authenticated:
-        logout(request)
-        return HttpResponseRedirect('/signin')
+    lang_data = LanguageDetector.get_language_processor(request)
+    if is_authenticated:
+        request.session.flush()
+        return HttpResponseRedirect('/')
     else:
         return HttpResponseRedirect('/')
 
