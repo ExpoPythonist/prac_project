@@ -13,7 +13,7 @@ class LanguageDetector(object):
             lan_data = cls.lan_json['bn']
 
         elif cls.client_lang() == "bn":
-            lan_data = cls.lan_json['bn']
+            lan_data = cls.lan_json['en']
         return lan_data
 
     @classmethod
