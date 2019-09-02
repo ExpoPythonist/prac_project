@@ -16,11 +16,21 @@ from django.http import HttpResponse, HttpResponseRedirect
 def home(request):
     lang_data = LanguageDetector.get_language_processor()
 
+    if is_authenticated(request):
+        return render(request, 'home.html',
+                      {'lang_data': lang_data, 'email': request.session['email'], 'auth': request.session['auth']})
+
+    return render(request, 'home.html', {'lang_data': lang_data})
+
+
+def user_profile(request):
+    lang_data = LanguageDetector.get_language_processor()
+
     if not is_authenticated(request):
         return HttpResponseRedirect('signin')
     # print(request.session['auth'])
     print(request.session['email'])
-    return render(request, 'home.html',
+    return render(request, 'user.html',
                   {'lang_data': lang_data, 'email': request.session['email'], 'auth': request.session['auth']})
 
 
@@ -75,9 +85,10 @@ def signin(request):
         if response.status_code == 200:
             request.session['auth'] = json.loads(response.content.decode('utf-8'))
             request.session['email'] = email
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/user')
         else:
-            return render(request, 'signin2.html', {'err_message': 'Credential doesn\'t match!', 'lang_data': lang_data})
+            return render(request, 'signin2.html',
+                          {'err_message': 'Credential doesn\'t match!', 'lang_data': lang_data})
 
     return render(request, 'signin2.html', {'lang_data': lang_data})
 

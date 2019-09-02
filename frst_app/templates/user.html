@@ -1,0 +1,102 @@
+{% load staticfiles %}
+
+<html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8"/>
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  -->
+    <title>Rebiton.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login and Registration Form with HTML5 and CSS3"/>
+
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/demo.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate-custom.css' %}"/>
+
+</head>
+{% block content %}
+    <body>
+
+    {#                # ========================================   Header start ============================================#}
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light header">
+        <a class="navbar-brand" href="{% url 'home' %}"><img src="https://www.rebiton.com/images/logo-dark.svg" alt="Rebiton Logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse header__exchange exchange-rate exchange-rate__text" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <svg width="24" height="24" class="icon icon-s icon-graph exchange-rate__icon" viewBox="0 0 23 22"><g><g><g><path fill="none" stroke="#000000" stroke-linecap="round" stroke-miterlimit="50" stroke-width="1.5" d="M6.197 14.745v0l4.03-6.88v0l5.798 2.321v0l5.798-6.267v0"></path></g><g><path fill="none" stroke="#000000" stroke-linecap="round" stroke-miterlimit="50" stroke-width="1.5" d="M3.22 1v19.706"></path></g><g><path fill="none" stroke="#000000" stroke-linecap="round" stroke-miterlimit="50" stroke-width="1.5" d="M1 18.525h21.193"></path></g></g></g></svg>
+                    <span class="font-weight-bold"><span>1 </span><span> BTC</span><span> = </span><span id="current-exchange-rate">11587.06</span><span class="ml-2">{{ lang_data.euro }}</span></span>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                {% if email %}
+                    <a class="text-success ml-r">{{ email }}</a>
+                    <a href="{% url 'signout' %}" class="btn btn-outline-success my-2 my-sm-0 ml-1">{{ lang_data.log_out }}</a>
+                {% else %}
+                <a href="{% url 'signin' %}" class="btn btn-outline-success">{{ lang_data.sign_in }}</a>
+                <a href="{% url 'register' %}" class="btn btn-outline-success my-2 my-sm-0 ml-1">{{ lang_data.register }}</a>
+                {% endif %}
+            </form>
+        </div>
+    </nav>
+
+    {#                # ========================================   Header End ============================================#}
+    <div class="container">
+        <section  class="login-section">
+            <h1 class="display-4 text-dark">{{ lang_data.buy_bitcoin }}</h1>
+            <h2 class="display-4 text-success"><small>{{ lang_data.no_id_required }}</small></h2>
+            <div id="container_demo">
+                <!-- hidden anchor to stop jump http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
+                <a class="hiddenanchor" id="toregister"></a>
+                <a class="hiddenanchor" id="tologin"></a>
+                <div id="wrapper">
+                    <div id="login" class="animate form">
+                        <h1 class="text-success text-center"><small>{{ lang_data.choose_voucher }}</small></h1>
+                        <form action="" method="POST" >{% csrf_token %}
+                            <p>
+                                <label >{{ lang_data.enter_the_amount_you_wish_to_buy }}</label>
+                                <input id="username" name="amount" required="required" type="text"
+                                       placeholder="{{ lang_data.enter_the_amount_you_wish_to_buy }}"/>
+                            </p>
+                            <p>
+                                <label id="username" data-icon="u"> {{ lang_data.email }} </label>
+                                <input id="password" name="email" required="required" type="email"
+                                       placeholder="{{ lang_data.email }}"/>
+                            </p>
+                            <p>
+                                <label > {{ lang_data.bitcoin_wallet_address }} </label>
+                                <input id="password" name="wallet_address" required="required" type="password"
+                                       placeholder="{{ lang_data.bitcoin_wallet_address }}"/>
+                            </p>
+                            <p class="font-weight-bold">{{ lang_data.make_sure_the_wallet_address_is_correct }}</p>
+                            <p class="button text-center">
+{#                                <input class="text-center" type="submit" value="{{ lang_data.pay_with_Credit_Card }}"/>#}
+                                <button type="submit" class="btn btn-info">{{ lang_data.pay_with_Credit_Card }}</button>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    </body>
+{% endblock %}
+
+</html>
