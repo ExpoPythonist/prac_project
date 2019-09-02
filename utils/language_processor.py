@@ -10,7 +10,7 @@ class LanguageDetector(object):
     def get_language_processor(cls):
         lan_data = "en"
         if cls.client_lang() == "en":
-            lan_data = cls.lan_json['bn']
+            lan_data = cls.lan_json['en']
 
         elif cls.client_lang() == "bn":
             lan_data = cls.lan_json['bn']
