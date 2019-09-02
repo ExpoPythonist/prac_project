@@ -76,8 +76,8 @@
                                 <input type="submit" value="{{ lang_data.sign_in }}"/>
                             </p>
                         </form>
-                        {% if message %}
-                        <h3 class="text-danger">{{ message }}</h3>
+                        {% if err_message %}
+                        <h3 class="text-danger">{{ err_message }}</h3>
                         {% endif %}
                     </div>
                 </div>

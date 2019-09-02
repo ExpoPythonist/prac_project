@@ -34,8 +34,9 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         repeat_password = request.POST.get('repeat_password')
-        if not password == repeat_password:
-            return render(request, 'register.html', {'err_message': '** Password doesn\'t match!', 'lang_data': lang_data})
+        if password != repeat_password:
+            return render(request, 'register.html',
+                          {'err_message': '** Password doesn\'t match!', 'lang_data': lang_data})
         url = "https://exercise.api.rebiton.com/auth/register"
         data = {
             "code": code,
@@ -46,16 +47,15 @@ def register(request):
         response = CallAPIProcessor.api(url=url, request=request, data=data)
 
         if response.status_code == 200:
-            return render(request, 'register.html', {'success_message': '** Registration is complete! Please login'})
+            return render(request, 'register.html',
+                          {'success_message': '** Registration is complete! Please login', 'lang_data': lang_data})
         else:
             res_content = json.loads(response.content.decode('utf-8'))
             error = res_content['errors']
             last_err = "Registration is Failed"
             for err in error:
                 last_err = err
-            return render(request, 'register.html', {'message': '** '+error[last_err][0]})
-
-
+            return render(request, 'register.html', {'err_message': '** ' + error[last_err][0], 'lang_data': lang_data})
 
     return render(request, 'register.html', {'lang_data': lang_data})
 
@@ -72,19 +72,18 @@ def signin(request):
             "password": password
         }
         response = CallAPIProcessor.api(url=url, request=request, data=data)
-        print('response  ', response.content)
         if response.status_code == 200:
             request.session['auth'] = json.loads(response.content.decode('utf-8'))
             request.session['email'] = email
             return HttpResponseRedirect('/')
         else:
-            return render(request, 'signin2.html', {'message': 'Credential doesn\'t match!', 'lang_data': lang_data})
+            return render(request, 'signin2.html', {'err_message': 'Credential doesn\'t match!', 'lang_data': lang_data})
 
     return render(request, 'signin2.html', {'lang_data': lang_data})
 
 
 def signout(request):
-    lang_data = LanguageDetector.get_language_processor()
+    # lang_data = LanguageDetector.get_language_processor()
     if is_authenticated:
         request.session.flush()
         return HttpResponseRedirect('/')
