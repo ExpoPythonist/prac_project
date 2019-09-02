@@ -7,8 +7,7 @@
     <title>Rebiton.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Login and Registration Form with HTML5 and CSS3"/>
-    <meta name="keywords" content="html5, css3, form, switch, animation, :target, pseudo-class"/>
-    <meta name="author" content="Codrops"/>
+
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -43,16 +42,16 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <svg width="24" height="24" class="icon icon-s icon-graph exchange-rate__icon" viewBox="0 0 23 22"><g><g><g><path fill="none" stroke="#000000" stroke-linecap="round" stroke-miterlimit="50" stroke-width="1.5" d="M6.197 14.745v0l4.03-6.88v0l5.798 2.321v0l5.798-6.267v0"></path></g><g><path fill="none" stroke="#000000" stroke-linecap="round" stroke-miterlimit="50" stroke-width="1.5" d="M3.22 1v19.706"></path></g><g><path fill="none" stroke="#000000" stroke-linecap="round" stroke-miterlimit="50" stroke-width="1.5" d="M1 18.525h21.193"></path></g></g></g></svg>
-                    <span class="font-weight-bold"><span>1 </span><span> BTC</span><span> = </span><span id="current-exchange-rate">11587.06</span><span class="ml-2">EUR</span></span>
+                    <span class="font-weight-bold"><span>1 </span><span> BTC</span><span> = </span><span id="current-exchange-rate">11587.06</span><span class="ml-2">{{ lang_data.euro }}</span></span>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 {% if email %}
                     <a class="text-success ml-r">{{ email }}</a>
-                    <a href="{% url 'signout' %}" class="btn btn-outline-success my-2 my-sm-0 ml-1">Logout</a>
+                    <a href="{% url 'signout' %}" class="btn btn-outline-success my-2 my-sm-0 ml-1">{{ lang_data.log_out }}</a>
                 {% else %}
-                <a href="{% url 'signin' %}" class="btn btn-outline-success">Sign In</a>
-                <a href="{% url 'register' %}" class="btn btn-outline-success my-2 my-sm-0 ml-1">Register</a>
+                <a href="{% url 'signin' %}" class="btn btn-outline-success">{{ lang_data.sign_in }}</a>
+                <a href="{% url 'register' %}" class="btn btn-outline-success my-2 my-sm-0 ml-1">{{ lang_data.register }}</a>
                 {% endif %}
             </form>
         </div>
@@ -61,39 +60,37 @@
     {#                # ========================================   Header End ============================================#}
     <div class="container">
         <section  class="login-section">
-            <h1 class="display-4 text-dark">The easy way to buy Bitcoin.</h1>
-            <h2 class="display-4 text-success"><small>No ID required.</small></h2>
+            <h1 class="display-4 text-dark">{{ lang_data.buy_bitcoin }}</h1>
+            <h2 class="display-4 text-success"><small>{{ lang_data.no_id_required }}</small></h2>
             <div id="container_demo">
                 <!-- hidden anchor to stop jump http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
                 <a class="hiddenanchor" id="toregister"></a>
                 <a class="hiddenanchor" id="tologin"></a>
                 <div id="wrapper">
                     <div id="login" class="animate form">
-                        <h1 class="text-success text-center"><small>Choose your voucher/s</small></h1>
+                        <h1 class="text-success text-center"><small>{{ lang_data.choose_voucher }}</small></h1>
                         <form action="" method="POST" >{% csrf_token %}
                             <p>
-                                <label >Enter the amount you wish to buy: </label>
+                                <label >{{ lang_data.enter_the_amount_you_wish_to_buy }}</label>
                                 <input id="username" name="amount" required="required" type="text"
-                                       placeholder="Enter the amount"/>
+                                       placeholder="{{ lang_data.enter_the_amount_you_wish_to_buy }}"/>
                             </p>
                             <p>
-                                <label id="username" data-icon="u"> Email </label>
+                                <label id="username" data-icon="u"> {{ lang_data.email }} </label>
                                 <input id="password" name="email" required="required" type="email"
-                                       placeholder="Enter your email"/>
+                                       placeholder="{{ lang_data.email }}"/>
                             </p>
                             <p>
-                                <label > Bitcoin wallet address: </label>
+                                <label > {{ lang_data.bitcoin_wallet_address }} </label>
                                 <input id="password" name="wallet_address" required="required" type="password"
-                                       placeholder="Enter your BTC wallet address"/>
+                                       placeholder="{{ lang_data.bitcoin_wallet_address }}"/>
                             </p>
-                            <p class="font-weight-bold">Make sure the wallet address is correct. Otherwise, your Bitcoin will be lost.</p>
-                            <p class="login button text-center">
-                                <input class="text-center" type="submit" value="Pay with Credit Card"/>
+                            <p class="font-weight-bold">{{ lang_data.make_sure_the_wallet_address_is_correct }}</p>
+                            <p class="button text-center">
+{#                                <input class="text-center" type="submit" value="{{ lang_data.pay_with_Credit_Card }}"/>#}
+                                <button type="submit" class="btn btn-info">{{ lang_data.pay_with_Credit_Card }}</button>
                             </p>
                         </form>
-                        {% if message %}
-                        <h3 class="text-danger">{{ message }}</h3>
-                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -7,13 +7,14 @@ class LanguageDetector(object):
         lan_json = json.load(json_file)
 
     @classmethod
-    def get_language_processor(cls, request):
+    def get_language_processor(cls):
+        lan_data = "en"
         if cls.client_lang() == "en":
-            lan_data = cls.lan_json['en']
-            return lan_data
+            lan_data = cls.lan_json['bn']
+
         elif cls.client_lang() == "bn":
             lan_data = cls.lan_json['bn']
-        # pass
+        return lan_data
 
     @classmethod
     def client_lang(cls):

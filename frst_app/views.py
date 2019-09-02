@@ -14,18 +14,18 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 
 def home(request):
-    lang_data = LanguageDetector.get_language_processor(request)
+    lang_data = LanguageDetector.get_language_processor()
 
     if not is_authenticated(request):
         return HttpResponseRedirect('signin')
-    print(request.session['auth'])
+    # print(request.session['auth'])
     print(request.session['email'])
     return render(request, 'home.html',
                   {'lang_data': lang_data, 'email': request.session['email'], 'auth': request.session['auth']})
 
 
 def register(request):
-    lang_data = LanguageDetector.get_language_processor(request)
+    lang_data = LanguageDetector.get_language_processor()
     if is_authenticated(request):
         return HttpResponseRedirect('/')
 
@@ -61,7 +61,7 @@ def register(request):
 
 
 def signin(request):
-    lang_data = LanguageDetector.get_language_processor(request)
+    lang_data = LanguageDetector.get_language_processor()
 
     if request.method == "POST":
         email = request.POST.get('email')
@@ -84,7 +84,7 @@ def signin(request):
 
 
 def signout(request):
-    lang_data = LanguageDetector.get_language_processor(request)
+    lang_data = LanguageDetector.get_language_processor()
     if is_authenticated:
         request.session.flush()
         return HttpResponseRedirect('/')

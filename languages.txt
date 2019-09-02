@@ -5,7 +5,8 @@
       "about_wallets":"About wallets",
       "my_profile ":"My Profile",
       "log_out":"Log Out",
-      "buy_bitcoin":"The easy way to buy Bitcoin.No ID required.",
+      "buy_bitcoin":"The easy way to buy Bitcoin.",
+      "no_id_required":"No ID required.",
       "choose_voucher": "Choose your voucher/s",
       "enter_the_amount_you_wish_to_buy": "Enter the amount you wish to buy",
       "email": "Email",
@@ -17,8 +18,8 @@
       "repeat_password": "Repeat password",
       "register": "Register",
       "and_create_your_account": "and create your account",
-      "code": "Code"
-
+      "code": "Code",
+      "euro": "EUR"
    },
    "bn":{
       "sign_in":"প্রবেশ করুন",
@@ -26,18 +27,20 @@
       "about_wallets":"ওয়ালেট দেখুন",
       "my_profile ":"আমার প্রোফাইল",
       "log_out":"প্রস্থান",
-      "buy_bitcoin":"বিটকয়েন কেনার সহজ উপায়।কোন আইডি প্রয়োজন নাই।",
+      "buy_bitcoin":"বিটকয়েন কেনার সহজ উপায়।",
+      "no_id_required": "কোন আইডি প্রয়োজন নাই।",
       "choose_voucher": "আপনার ভাউচার চয়ন করুন",
       "enter_the_amount_you_wish_to_buy": "আপনি কি পরিমাণ কিনতে চান তা লিখুন:",
       "email": "ই-মেইল",
       "bitcoin_wallet_address": "বিটকয়েন ওয়ালেটের ঠিকানা:",
-      "make_sure_the_wallet_address_is_correct": "মানিব্যাগের ঠিকানাটি সঠিক কিনা তা নিশ্চিত করুন। অন্যথায়, আপনার বিটকয়েন হারিয়ে যাবে।",
+      "make_sure_the_wallet_address_is_correct": "ওয়ালেটের ঠিকানাটি সঠিক কিনা তা নিশ্চিত করুন। অন্যথায়, আপনার বিটকয়েন হারিয়ে যাবে।",
       "pay_with_Credit_Card": "ক্রেডিট কার্ডে পেমেন্ট করুন",
       "your_email_or_username": "আপনার ইমেল বা ব্যবহারকারীর নাম",
       "your_password": "আপনার পাসওয়ার্ড",
       "repeat_password": "পুনঃ পাসওয়ার্ড",
       "register": "নিবন্ধন",
       "and_create_your_account": "এবং আপনার অ্যাকাউন্ট তৈরি করুন",
-      "code": "কোড"
+      "code": "কোড",
+      "euro": "ইউরো"
    }
 }
