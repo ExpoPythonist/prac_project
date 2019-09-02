@@ -24,6 +24,5 @@ urlpatterns = [
     path('user', views.user_profile, name='user_profile'),
     path('signout', views.signout, name='signout'),
     path('register', views.register, name='register'),
-    # path('student-edit/<int:s_id>/', views.EditStudent, name='student_edit'),
 
 ]
