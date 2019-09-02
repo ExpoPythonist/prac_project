@@ -4,7 +4,7 @@ services:
   web:
     build: .
     command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    container_name: music_service
+    container_name: prac_project
     volumes:
       - .:/prac_project
     ports:

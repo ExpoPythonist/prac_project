@@ -28,8 +28,6 @@ def user_profile(request):
 
     if not is_authenticated(request):
         return HttpResponseRedirect('signin')
-    # print(request.session['auth'])
-    print(request.session['email'])
     return render(request, 'user.html',
                   {'lang_data': lang_data, 'email': request.session['email'], 'auth': request.session['auth']})
 
@@ -56,16 +54,21 @@ def register(request):
         }
         response = CallAPIProcessor.api(url=url, request=request, data=data)
 
-        if response.status_code == 200:
+
+        if response.status_code == 200 or response.status_code == 201:
             return render(request, 'register.html',
                           {'success_message': '** Registration is complete! Please login', 'lang_data': lang_data})
         else:
-            res_content = json.loads(response.content.decode('utf-8'))
-            error = res_content['errors']
-            last_err = "Registration is Failed"
-            for err in error:
-                last_err = err
-            return render(request, 'register.html', {'err_message': '** ' + error[last_err][0], 'lang_data': lang_data})
+            try:
+                res_content = json.loads(response.content.decode('utf-8'))
+                error = res_content['errors']
+                last_err = "Registration is Failed"
+                for err in error:
+                    last_err = err
+                return render(request, 'register.html', {'err_message': '** ' + error[last_err][0], 'lang_data': lang_data})
+            except:
+                return render(request, 'register.html',
+                       {'success_message': '** Registration is complete! Please login', 'lang_data': lang_data})
 
     return render(request, 'register.html', {'lang_data': lang_data})
 

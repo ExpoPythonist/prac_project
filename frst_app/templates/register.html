@@ -33,7 +33,8 @@
     {#                # ========================================   Header start ============================================#}
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light header">
-        <a class="navbar-brand" href="{% url 'home' %}"><img src="https://www.rebiton.com/images/logo-dark.svg" alt="Rebiton Logo"></a>
+        <a class="navbar-brand" href="{% url 'home' %}"><img src="https://www.rebiton.com/images/logo-dark.svg"
+                                                             alt="Rebiton Logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -63,12 +64,14 @@
                         </g>
                     </svg>
                     <span class="font-weight-bold"><span>1 </span><span> BTC</span><span> = </span><span
-                            id="current-exchange-rate">11587.06</span><span class="ml-2">{{ lang_data.euro }}</span></span>
+                            id="current-exchange-rate">11587.06</span><span
+                            class="ml-2">{{ lang_data.euro }}</span></span>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <a href="{% url 'signin' %}" class="btn btn-outline-success">{{ lang_data.sign_in }}</a>
-                <a href="{% url 'register' %}" class="btn btn-outline-success my-2 my-sm-0 ml-1">{{ lang_data.register }}</a>
+                <a href="{% url 'register' %}"
+                   class="btn btn-outline-success my-2 my-sm-0 ml-1">{{ lang_data.register }}</a>
             </form>
         </div>
     </nav>
@@ -88,31 +91,49 @@
                     <div id="login" class="animate form">
                         <form action="{% url 'register' %}" method="POST" autocomplete="on">{% csrf_token %}
                             <h1>{{ lang_data.register }}
-                                <div class="small"><small class="text-sm small">{{ lang_data.and_create_your_account }}</small></div>
+                                <div class="small">
+                                    <small class="text-sm small">{{ lang_data.and_create_your_account }}</small>
+                                </div>
                             </h1>
 
                             <p>
-                                <label >{{ lang_data.code }}</label>
+                                <label>{{ lang_data.code }}</label>
                                 <input id="code" name="code" required="required" type="text"
                                        placeholder="{{ lang_data.code }}"/>
                             </p>
                             <p>
-                                <label for="username" class="uname" data-icon="u"> {{ lang_data.your_email_or_username }} </label>
+                                <label for="username" class="uname"
+                                       data-icon="u"> {{ lang_data.your_email_or_username }} </label>
                                 <input id="username" name="email" required="required" type="text"
                                        placeholder="{{ lang_data.your_email_or_username }}"/>
                             </p>
                             <p>
-                                <label for="password" class="youpasswd" data-icon="p"> {{ lang_data.your_password }} </label>
+                                <label for="password" class="youpasswd"
+                                       data-icon="p"> {{ lang_data.your_password }} </label>
                                 <input id="password" name="password" required="required" type="password"
                                        placeholder="{{ lang_data.your_password }}"/>
                             </p>
                             <p>
-                                <label for="password" class="youpasswd" data-icon="p"> {{ lang_data.repeat_password }} </label>
+                                <label for="password" class="youpasswd"
+                                       data-icon="p"> {{ lang_data.repeat_password }} </label>
                                 <input id="password" name="repeat_password" required="required" type="password"
                                        placeholder="{{ lang_data.repeat_password }}"/>
                             </p>
+                            <p>
+                                <input type="checkbox" name="agree1" id="agree1" value="agree1"
+                                       onclick="return checkEnable();"/> <label for='agree'>I
+                                agree with Terms & Conditions and Privacy policy</label>
+
+                            </p>
+                            <p>
+                                <input type="checkbox" name="agree2" id="agree2" value="agree2"
+                                       onclick="return checkEnable();"/> <label for='agree'>I
+                                agree to receive promotional messages</label>
+
+                            </p>
                             <p class="login button">
-                                <input type="submit" value="{{ lang_data.register }}"/>
+                                <input type="submit" value="{{ lang_data.register }}" id="register_submit_btn" disabled
+                                       style="background-color: lightgray"/>
                             </p>
                         </form>
 
@@ -125,6 +146,26 @@
         </section>
     </div>
     </body>
+
+
+    <script type="text/javascript">
+
+        function checkEnable() {
+            var is_checked1 = document.getElementById("agree1").checked;
+            var is_checked2 = document.getElementById("agree2").checked;
+
+            if (is_checked1 && is_checked2) {
+                document.getElementById("register_submit_btn").disabled = false;
+                 $("#register_submit_btn").css('background-color', 'green');
+            } else {
+                document.getElementById("register_submit_btn").disabled = true;
+                 $("#register_submit_btn").css('background-color', 'lightgray');
+            }
+        }
+
+
+    </script>
+
 {% endblock %}
 
 </html>
